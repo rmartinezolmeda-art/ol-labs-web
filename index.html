@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OL-LABS | Lead Generation & AI Agents</title>
+  <meta name="description" content="Agencia de tecnología y automatización especializada en captación de leads y agentes IA multicanal." />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#effcfc',
+              100: '#cbf8f8',
+              200: '#99f0f0',
+              300: '#5ce2e3',
+              400: '#28c8c9',
+              500: '#0ea4a5',
+              600: '#068385',
+              700: '#07696b',
+              800: '#0a5456',
+              900: '#0c4648',
+              950: '#020617',
+            },
+            accent: {
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-brand-950 text-slate-200 antialiased">
+
+  <!-- HERO -->
+  <section class="min-h-screen flex items-center justify-center px-6">
+    <div class="max-w-4xl text-center space-y-6 animate-fade-up">
+      <h1 class="text-4xl md:text-6xl font-semibold text-white">
+        Automatizamos tu captación de leads con IA
+      </h1>
+      <p class="text-lg md:text-xl text-slate-400">
+        En OL-LABS diseñamos sistemas inteligentes y agentes IA multicanal
+        que responden, califican y convierten leads 24/7.
+      </p>
+      <a href="#contacto" class="inline-block px-6 py-3 rounded-lg bg-brand-500 text-white hover:bg-brand-400 transition">
+        Contactar
+      </a>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="py-24 px-6 bg-brand-900">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
+        <h3 class="text-xl font-semibold mb-2">Captación de Leads</h3>
+        <p class="text-slate-400">Sistemas automáticos que convierten visitas en oportunidades reales.</p>
+      </div>
+      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
+        <h3 class="text-xl font-semibold mb-2">Agentes IA Multicanal</h3>
+        <p class="text-slate-400">Voz, WhatsApp y chat respondiendo en segundos, 24/7.</p>
+      </div>
+      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
+        <h3 class="text-xl font-semibold mb-2">Automatización & CRM</h3>
+        <p class="text-slate-400">Infraestructura clara para seguimiento y conversión.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="py-24 px-6 text-center">
+    <h2 class="text-3xl font-semibold text-white mb-6">Contacto</h2>
+    <p class="text-slate-400 mb-6">
+      Descubre cómo mejorar tu captación con automatización inteligente.
+    </p>
+    <p class="text-lg">
+      📞 <a href="tel:+34608440993" class="text-brand-400 hover:underline">+34 608 440 993</a><br>
+      ✉️ <a href="mailto:contact@ol-labs.com" class="text-brand-400 hover:underline">contact@ol-labs.com</a>
+    </p>
+  </section>
+
+</body>
+</html>
