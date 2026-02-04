@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OL-LABS | Lead Generation & AI Agents</title>
-  <meta name="description" content="Agencia de tecnología y automatización especializada en captación de leads y agentes IA multicanal." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Ol-Labs | Smart · Scalable · AI</title>
+  <meta name="description" content="Ol-Labs diseña sistemas de captación de leads y agentes IA multicanal para responder, cualificar y convertir 24/7." />
+  <meta name="theme-color" content="#0ea4a5" />
 
+  <!-- Logo preloads (faster, less flicker) -->
+  <link rel="preload" as="image" href="/assets/logo-horizontal.png">
+  <link rel="preload" as="image" href="/assets/logo-mark.png">
+  <link rel="icon" type="image/png" href="/assets/logo-mark.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -35,14 +41,34 @@
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
           },
-          animation: {
-            'fade-up': 'fadeUp 0.8s ease-out forwards',
+          boxShadow: {
+            glow: '0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.35)',
+            soft: '0 10px 30px rgba(0,0,0,0.35)',
           },
           keyframes: {
-            fadeUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
+            floaty: {
+              '0%,100%': { transform: 'translate3d(0,0,0)' },
+              '50%': { transform: 'translate3d(0,-14px,0)' }
             },
+            shimmer: {
+              '0%': { transform: 'translateX(-140%)' },
+              '100%': { transform: 'translateX(140%)' }
+            },
+            drift: {
+              '0%': { transform: 'translate3d(-6%, -4%, 0) scale(1)' },
+              '50%': { transform: 'translate3d(6%, 4%, 0) scale(1.04)' },
+              '100%': { transform: 'translate3d(-6%, -4%, 0) scale(1)' }
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' }
+            }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            shimmer: 'shimmer 2.2s ease-in-out infinite',
+            drift: 'drift 14s ease-in-out infinite',
+            marquee: 'marquee 18s linear infinite',
           }
         }
       }
@@ -51,59 +77,434 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; }
+
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 6px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Subtle grain */
+    .grain:before {
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .22;
+    }
+
+    /* Premium: mask for marquee edges */
+    .mask-fade {
+      -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+              mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    }
+
+    /* Premium: parallax card transforms */
+    .parallax-wrap { perspective: 1200px; }
+    .parallax-card {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 140ms ease;
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none; }
+      .parallax-card { transition: none; }
+      .animate-drift, .animate-floaty, .animate-marquee, .animate-shimmer { animation: none !important; }
+    }
   </style>
 </head>
 
-<body class="bg-brand-950 text-slate-200 antialiased">
+<body class="bg-brand-950 text-slate-200 antialiased selection:bg-brand-500/30 selection:text-brand-200 grain">
 
-  <!-- HERO -->
-  <section class="min-h-screen flex items-center justify-center px-6">
-    <div class="max-w-4xl text-center space-y-6 animate-fade-up">
-      <h1 class="text-4xl md:text-6xl font-semibold text-white">
-        Automatizamos tu captación de: leads con IA
-      </h1>
-      <p class="text-lg md:text-xl text-slate-400">
-        En OL-LABS diseñamos sistemas inteligentes y agentes IA multicanal
-        que responden, califican y convierten leads 24/7.
-      </p>
-      <a href="#contacto" class="inline-block px-6 py-3 rounded-lg bg-brand-500 text-white hover:bg-brand-400 transition">
-        Contactar
+  <!-- Ambient animated background -->
+  <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-44 -left-44 h-[560px] w-[560px] rounded-full bg-brand-500/18 blur-3xl animate-drift"></div>
+    <div class="absolute top-24 -right-52 h-[620px] w-[620px] rounded-full bg-accent-400/12 blur-3xl animate-drift" style="animation-delay:-6s"></div>
+    <div class="absolute bottom-[-240px] left-1/2 -translate-x-1/2 h-[680px] w-[680px] rounded-full bg-brand-300/10 blur-3xl animate-drift" style="animation-delay:-10s"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-950 via-brand-950 to-black/70"></div>
+  </div>
+
+  <!-- Top bar -->
+  <header class="sticky top-0 z-50 border-b border-white/6 bg-brand-950/70 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3">
+        <img
+          src="/assets/logo-mark.png"
+          alt="Ol-Labs"
+          class="h-10 w-10 rounded-xl shadow-glow"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="hidden sm:block leading-tight">
+          <div class="text-sm font-semibold text-white">Ol-Labs</div>
+          <div class="text-xs text-slate-400">Smart · Scalable · AI</div>
+        </div>
       </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm text-slate-300">
+        <a href="#servicios" class="hover:text-white transition">Servicios</a>
+        <a href="#proceso" class="hover:text-white transition">Proceso</a>
+        <a href="#contacto" class="hover:text-white transition">Contacto</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/34608440993?text=Hola%20Ol-Labs,%20quiero%20info%20sobre%20captaci%C3%B3n%20de%20leads%20y%20agentes%20IA" target="_blank"
+           class="hidden sm:inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10 transition">
+          WhatsApp
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent-400"></span>
+        </a>
+        <a href="#contacto" class="inline-flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-400 transition">
+          Hablar con nosotros
+          <span class="relative inline-flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-white/40 animate-ping"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-white"></span>
+          </span>
+        </a>
+      </div>
     </div>
-  </section>
+  </header>
 
-  <!-- SERVICIOS -->
-  <section class="py-24 px-6 bg-brand-900">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
-      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
-        <h3 class="text-xl font-semibold mb-2">Captación de Leads</h3>
-        <p class="text-slate-400">Sistemas automáticos que convierten visitas en oportunidades reales.</p>
-      </div>
-      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
-        <h3 class="text-xl font-semibold mb-2">Agentes IA Multicanal</h3>
-        <p class="text-slate-400">Voz, WhatsApp y chat respondiendo en segundos, 24/7.</p>
-      </div>
-      <div class="p-6 rounded-xl bg-brand-950 border border-white/5">
-        <h3 class="text-xl font-semibold mb-2">Automatización & CRM</h3>
-        <p class="text-slate-400">Infraestructura clara para seguimiento y conversión.</p>
-      </div>
-    </div>
-  </section>
+  <!-- Hero -->
+  <main id="top">
+    <section class="mx-auto max-w-6xl px-6 pt-16 pb-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-slate-300 reveal">
+            <span class="h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
+            Captación de leads + Agentes IA multicanal
+          </div>
 
-  <!-- CONTACTO -->
-  <section id="contacto" class="py-24 px-6 text-center">
-    <h2 class="text-3xl font-semibold text-white mb-6">Contacto</h2>
-    <p class="text-slate-400 mb-6">
-      Descubre cómo mejorar tu captación con automatización inteligente.
-    </p>
-    <p class="text-lg">
-      📞 <a href="tel:+34608440993" class="text-brand-400 hover:underline">+34 608 440 993</a><br>
-      ✉️ <a href="mailto:contact@ol-labs.com" class="text-brand-400 hover:underline">contact@ol-labs.com</a>
-    </p>
-  </section>
+          <h1 class="mt-5 text-4xl md:text-6xl font-semibold tracking-tight text-white reveal">
+            Automatizamos tu captación de leads con IA.
+          </h1>
 
+          <p class="mt-5 text-lg md:text-xl text-slate-400 leading-relaxed reveal">
+            Diseñamos sistemas inteligentes y agentes IA (WhatsApp, web y voz) que responden en segundos,
+            cualifican contactos y convierten oportunidades <span class="text-slate-200">24/7</span>.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-3 reveal">
+            <a href="#contacto"
+               class="inline-flex items-center justify-center rounded-xl bg-brand-500 px-6 py-3 font-semibold text-white hover:bg-brand-400 transition shadow-glow">
+              Pedir diagnóstico
+            </a>
+
+            <a href="#servicios"
+               class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-slate-200 hover:bg-white/10 transition">
+              Ver servicios
+            </a>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-400 reveal">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-accent-400"></span>
+              Respuesta inmediata
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-brand-400"></span>
+              Integración CRM
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-white/40"></span>
+              Escalable y mantenible
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 parallax-wrap">
+          <div id="parallaxCard" class="parallax-card relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/4 p-6 shadow-glow reveal">
+            <div class="absolute inset-0 overflow-hidden rounded-2xl">
+              <div class="absolute -left-1/3 top-6 h-40 w-40 rounded-full bg-brand-500/20 blur-2xl animate-floaty"></div>
+              <div class="absolute -right-1/3 bottom-6 h-44 w-44 rounded-full bg-accent-400/10 blur-2xl animate-floaty" style="animation-delay:-2s"></div>
+            </div>
+
+            <div class="relative">
+              <img
+                src="/assets/logo-horizontal.png"
+                alt="Ol-Labs — Smart · Scalable · AI"
+                class="w-full rounded-xl opacity-95"
+                style="image-rendering: -webkit-optimize-contrast;"
+                loading="eager"
+                decoding="async"
+              />
+
+              <div class="mt-6 grid gap-3">
+                <div class="rounded-xl border border-white/10 bg-black/20 p-4">
+                  <div class="text-xs text-slate-400">Resultado típico</div>
+                  <div class="mt-1 text-base font-semibold text-white">+ leads cualificados, menos tiempo perdido</div>
+                </div>
+
+                <div class="rounded-xl border border-white/10 bg-black/20 p-4">
+                  <div class="text-xs text-slate-400">Arquitectura</div>
+                  <div class="mt-1 text-base font-semibold text-white">Landing → IA → CRM → Seguimiento automático</div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/20 p-4">
+                  <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-brand-500/10 to-transparent -translate-x-full animate-shimmer"></div>
+                  <div class="text-xs text-slate-400">Velocidad</div>
+                  <div class="mt-1 text-base font-semibold text-white">Respuestas en segundos, 24/7</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-xs text-slate-500 reveal">
+            *Implementaciones adaptadas a tu sector. Enfoque: rendimiento + escalabilidad.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Marquee -->
+    <section class="mx-auto max-w-6xl px-6 pb-14">
+      <div class="mask-fade rounded-2xl border border-white/10 bg-white/5 py-4 overflow-hidden shadow-soft reveal">
+        <div class="flex w-[200%] gap-3 animate-marquee">
+          <!-- Duplicate content (for seamless loop) -->
+          <div class="flex w-1/2 items-center gap-3 whitespace-nowrap">
+            <span class="mx-2 text-xs text-slate-400">•</span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-400"></span> Lead Gen Systems
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-accent-400"></span> WhatsApp AI Agents
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-300"></span> CRM Integrations
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-white/40"></span> 24/7 Qualification
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-400"></span> Voice Automation
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-accent-400"></span> Follow-up Workflows
+            </span>
+          </div>
+          <div class="flex w-1/2 items-center gap-3 whitespace-nowrap" aria-hidden="true">
+            <span class="mx-2 text-xs text-slate-400">•</span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-400"></span> Lead Gen Systems
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-accent-400"></span> WhatsApp AI Agents
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-300"></span> CRM Integrations
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-white/40"></span> 24/7 Qualification
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-brand-400"></span> Voice Automation
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm">
+              <span class="h-2 w-2 rounded-full bg-accent-400"></span> Follow-up Workflows
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="servicios" class="mx-auto max-w-6xl px-6 py-16">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-semibold text-white reveal">Servicios</h2>
+          <p class="mt-3 text-slate-400 max-w-2xl reveal">
+            Dos pilares. Todo lo demás es soporte técnico para que funcionen sin fricción.
+          </p>
+        </div>
+        <a href="#contacto" class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-semibold hover:bg-white/10 transition reveal">
+          Quiero una propuesta
+        </a>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <!-- Lead gen -->
+        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-7 shadow-glow reveal">
+          <div class="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-brand-500/20 blur-3xl transition group-hover:bg-brand-400/25"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-white">Captación de leads</h3>
+              <span class="text-xs rounded-full border border-white/10 bg-black/30 px-3 py-1 text-slate-300">Core</span>
+            </div>
+            <p class="mt-3 text-slate-400">
+              Landing + formularios inteligentes + seguimiento automatizado. Reducimos la fuga de leads y aceleramos la conversión.
+            </p>
+            <ul class="mt-5 space-y-2 text-sm text-slate-300">
+              <li class="flex gap-2"><span class="text-accent-400">•</span>Optimización para anuncios (Meta/Google)</li>
+              <li class="flex gap-2"><span class="text-accent-400">•</span>Integración CRM y pipeline de ventas</li>
+              <li class="flex gap-2"><span class="text-accent-400">•</span>Automatizaciones de seguimiento y recordatorios</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Agents -->
+        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-7 shadow-glow reveal">
+          <div class="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-accent-400/15 blur-3xl transition group-hover:bg-accent-400/20"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-white">Agentes IA multicanal</h3>
+              <span class="text-xs rounded-full border border-white/10 bg-black/30 px-3 py-1 text-slate-300">Core</span>
+            </div>
+            <p class="mt-3 text-slate-400">
+              IA en WhatsApp, web y voz para responder, cualificar y agendar. Tu negocio atiende 24/7 sin ampliar equipo.
+            </p>
+            <ul class="mt-5 space-y-2 text-sm text-slate-300">
+              <li class="flex gap-2"><span class="text-brand-300">•</span>WhatsApp: respuestas, catálogo, pre-cualificación</li>
+              <li class="flex gap-2"><span class="text-brand-300">•</span>Web chat: captura y routing a comercial</li>
+              <li class="flex gap-2"><span class="text-brand-300">•</span>Voz: llamadas, confirmaciones y seguimiento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="proceso" class="mx-auto max-w-6xl px-6 py-16">
+      <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/6 to-white/3 p-8 shadow-glow">
+        <h2 class="text-3xl font-semibold text-white reveal">Proceso simple, ejecución seria</h2>
+        <p class="mt-3 text-slate-400 max-w-3xl reveal">
+          Sin humo. Entendemos tu captación, diseñamos el sistema y lo dejamos funcionando con métricas claras.
+        </p>
+
+        <div class="mt-10 grid md:grid-cols-3 gap-6">
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-6 reveal">
+            <div class="text-xs text-slate-400">01</div>
+            <div class="mt-2 text-lg font-semibold text-white">Diagnóstico</div>
+            <p class="mt-2 text-sm text-slate-400">Detectamos fugas, velocidad de respuesta y calidad de leads.</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-6 reveal">
+            <div class="text-xs text-slate-400">02</div>
+            <div class="mt-2 text-lg font-semibold text-white">Implementación</div>
+            <p class="mt-2 text-sm text-slate-400">Landing + IA + CRM + automatizaciones. Todo conectado.</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-6 reveal">
+            <div class="text-xs text-slate-400">03</div>
+            <div class="mt-2 text-lg font-semibold text-white">Optimización</div>
+            <p class="mt-2 text-sm text-slate-400">Iteramos copy, flujos y prompts para mejorar conversión.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contacto" class="mx-auto max-w-6xl px-6 pt-16 pb-24">
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <h2 class="text-3xl md:text-4xl font-semibold text-white reveal">Contacto</h2>
+          <p class="mt-3 text-slate-400 max-w-2xl reveal">
+            Te hacemos un diagnóstico rápido y te decimos qué automatizar para captación + seguimiento.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-3 reveal">
+            <a href="https://wa.me/34608440993?text=Hola%20Ol-Labs,%20quiero%20un%20diagn%C3%B3stico%20de%20captaci%C3%B3n%20y%20agentes%20IA" target="_blank"
+               class="inline-flex items-center justify-center rounded-xl bg-accent-500 px-6 py-3 font-semibold text-white hover:bg-accent-400 transition shadow-glow">
+              Escribir por WhatsApp
+            </a>
+            <a href="mailto:contact@ol-labs.com"
+               class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold hover:bg-white/10 transition">
+              Enviar email
+            </a>
+          </div>
+
+          <div class="mt-8 text-sm text-slate-400 space-y-1 reveal">
+            <div>📞 <a class="text-brand-300 hover:underline" href="tel:+34608440993">+34 608 440 993</a></div>
+            <div>✉️ <a class="text-brand-300 hover:underline" href="mailto:contact@ol-labs.com">contact@ol-labs.com</a></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-7 shadow-glow reveal">
+            <div class="flex items-center gap-3">
+              <img src="/assets/logo-mark.png" alt="Ol-Labs" class="h-10 w-10 rounded-xl" loading="lazy" decoding="async" />
+              <div>
+                <div class="font-semibold text-white">Ol-Labs</div>
+                <div class="text-xs text-slate-400">Smart · Scalable · AI</div>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-xl border border-white/10 bg-black/20 p-4">
+              <div class="text-xs text-slate-400">Siguiente paso recomendado</div>
+              <div class="mt-1 text-base font-semibold text-white">Auditamos tu captación y montamos el sistema IA</div>
+              <p class="mt-2 text-sm text-slate-400">Landing + agentes + CRM + automatizaciones. Enfoque a resultados.</p>
+            </div>
+
+            <div class="mt-6 text-xs text-slate-500">
+              © <span id="year"></span> Ol-Labs. Todos los derechos reservados.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/34608440993?text=Hola%20Ol-Labs,%20quiero%20info%20sobre%20captaci%C3%B3n%20de%20leads%20y%20agentes%20IA" target="_blank"
+     class="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-3 text-sm font-semibold text-white shadow-glow hover:bg-accent-400 transition">
+    WhatsApp
+    <span class="h-2 w-2 rounded-full bg-white animate-pulse"></span>
+  </a>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+
+    // Premium parallax (subtle)
+    const card = document.getElementById('parallaxCard');
+    if (card) {
+      const maxTilt = 6; // degrees (subtle)
+      const maxMove = 10; // px
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function onMove(e) {
+        if (prefersReduced) return;
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+
+        const rx = (py - 0.5) * -maxTilt;
+        const ry = (px - 0.5) * maxTilt;
+
+        const tx = (px - 0.5) * maxMove;
+        const ty = (py - 0.5) * maxMove;
+
+        card.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      }
+
+      function onLeave() {
+        card.style.transform = 'translate3d(0,0,0) rotateX(0deg) rotateY(0deg)';
+      }
+
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+      card.addEventListener('touchend', onLeave, { passive: true });
+    }
+  </script>
 </body>
 </html>
+
+
 
 
