@@ -7,11 +7,6 @@
   <meta name="description" content="Ol-Labs diseña sistemas de captación de leads y agentes IA multicanal para responder, cualificar y convertir 24/7." />
   <meta name="theme-color" content="#0ea4a5" />
 
-  <!-- Logo preloads (faster, less flicker) -->
-  <link rel="preload" as="image" href="/assets/logo-horizontal.png">
-  <link rel="preload" as="image" href="/assets/logo-mark.png">
-  <link rel="icon" type="image/png" href="/assets/logo-mark.png" />
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -68,7 +63,7 @@
             floaty: 'floaty 6s ease-in-out infinite',
             shimmer: 'shimmer 2.2s ease-in-out infinite',
             drift: 'drift 14s ease-in-out infinite',
-            marquee: 'marquee 32s linear infinite', // ✅ más lento y premium
+            marquee: 'marquee 32s linear infinite',
           }
         }
       }
@@ -77,21 +72,17 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; }
 
-    /* Smooth scrollbar */
     ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: #020617; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 6px; }
     ::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-    /* Reveal on scroll */
     .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* Subtle grain */
     .grain:before {
       content:"";
       position: fixed;
@@ -102,13 +93,11 @@
       opacity: .22;
     }
 
-    /* Premium: mask for marquee edges */
     .mask-fade {
       -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
               mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
     }
 
-    /* Premium: parallax card transforms */
     .parallax-wrap { perspective: 1200px; }
     .parallax-card {
       transform-style: preserve-3d;
@@ -116,7 +105,6 @@
       transition: transform 140ms ease;
     }
 
-    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .reveal { transition: none; }
       .parallax-card { transition: none; }
@@ -138,18 +126,9 @@
   <!-- Top bar -->
   <header class="sticky top-0 z-50 border-b border-white/6 bg-brand-950/70 backdrop-blur">
     <div class="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
-      <!-- ✅ LOGO + TEXT OK -->
+      <!-- ✅ Texto + slogan (sin imágenes) -->
       <a href="#top" class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-glow overflow-hidden">
-          <img
-            src="/assets/logo-mark.png"
-            alt="Ol-Labs"
-            class="h-8 w-8 object-contain"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <div class="hidden sm:block leading-tight">
+        <div class="leading-tight">
           <div class="text-sm font-semibold text-white">Ol-Labs</div>
           <div class="text-xs text-slate-400">Smart · Scalable · AI</div>
         </div>
@@ -232,16 +211,11 @@
               <div class="absolute -right-1/3 bottom-6 h-44 w-44 rounded-full bg-accent-400/10 blur-2xl animate-floaty" style="animation-delay:-2s"></div>
             </div>
 
-            <!-- ✅ Logo horizontal correcto -->
+            <!-- ✅ En vez de imagen: título premium -->
             <div class="relative">
-              <img
-                src="/assets/logo-horizontal.png"
-                alt="Ol-Labs — Smart · Scalable · AI"
-                class="w-full rounded-xl opacity-95"
-                style="image-rendering: -webkit-optimize-contrast;"
-                loading="eager"
-                decoding="async"
-              />
+              <div class="text-sm font-semibold text-white/90">
+                Ol-Labs <span class="text-slate-400">— Smart · Scalable · AI</span>
+              </div>
 
               <div class="mt-6 grid gap-3">
                 <div class="rounded-xl border border-white/10 bg-black/20 p-4">
@@ -430,15 +404,12 @@
 
         <div class="lg:col-span-5">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-7 shadow-glow reveal">
-            <div class="flex items-center gap-3">
-              <!-- ✅ mismo wrapper para que no recorte -->
-              <div class="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
-                <img src="/assets/logo-mark.png" alt="Ol-Labs" class="h-8 w-8 object-contain" loading="lazy" decoding="async" />
-              </div>
+            <div class="flex items-center justify-between">
               <div>
                 <div class="font-semibold text-white">Ol-Labs</div>
                 <div class="text-xs text-slate-400">Smart · Scalable · AI</div>
               </div>
+              <span class="text-xs rounded-full border border-white/10 bg-black/30 px-3 py-1 text-slate-300">24/7</span>
             </div>
 
             <div class="mt-6 rounded-xl border border-white/10 bg-black/20 p-4">
@@ -464,10 +435,8 @@
   </a>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Reveal on scroll
     const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -476,7 +445,6 @@
     }, { threshold: 0.12 });
     els.forEach(el => io.observe(el));
 
-    // Premium parallax (subtle)
     const card = document.getElementById('parallaxCard');
     if (card) {
       const maxTilt = 6;
