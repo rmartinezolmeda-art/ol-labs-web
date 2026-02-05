@@ -494,7 +494,7 @@
         const tx = (px - 0.5) * maxMove;
         const ty = (py - 0.5) * maxMove;
 
-        card.style.transform = translate3d(${tx}px, ${ty}px, 0) rotateX(${rx}deg) rotateY(${ry}deg);
+        card.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`;
       }
 
       function onLeave() {
